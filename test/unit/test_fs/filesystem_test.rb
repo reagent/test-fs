@@ -21,6 +21,10 @@ module TestFs
       it "should have an empty directory list by default" do
         @fs.directories.should == []
       end
+      
+      it "should have an empty file list by default" do
+        @fs.files.should == []
+      end
 
       it "should be able to add a directory" do
         dir = stub()
@@ -46,6 +50,26 @@ module TestFs
         
         @fs.stubs(:directories).with().returns([dir])
         @fs.create!
+      end
+      
+      it "should be able to add a file" do
+        file = stub()
+        @fs.stubs(:root).with().returns('/root')
+        
+        File.expects(:new).with('/root', 'file').returns(file)
+        
+        @fs.file 'file'
+        @fs.files.should == [file]
+      end
+      
+      it "should be able to create the underlying files" do
+        FileUtils.stubs(:mkdir)
+        
+        file = mock {|m| m.expects(:create!).with() }
+        @fs.stubs(:files).with().returns([file])
+        
+        @fs.create!
+        
       end
       
       it "should be able to destroy the filesystem created" do
