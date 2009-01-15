@@ -1,13 +1,13 @@
 module TestFs
   class Directory
     
-    def initialize(path, name)
-      @path = path
-      @name = name
+    def initialize(root_path, name)
+      @root_path = root_path
+      @name      = name
     end
     
     def path
-      "#{@path}/#{@name}"
+      "#{@root_path}/#{@name}"
     end
     
     def create!
