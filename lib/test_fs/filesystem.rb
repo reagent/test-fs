@@ -1,11 +1,10 @@
 module TestFs
   class Filesystem
 
-    attr_reader :directories, :files
+    attr_reader :nodes
     
     def initialize
-      @directories = []
-      @files       = []
+      @nodes = []
     end
     
     def root
@@ -13,17 +12,16 @@ module TestFs
     end
     
     def dir(name)
-      @directories << Directory.new(self.root, name)
+      self.nodes << Directory.new(self.root, name)
     end
     
     def file(name)
-      @files << File.new(self.root, name)
+      self.nodes << File.new(self.root, name)
     end
     
     def create!
       FileUtils.mkdir(self.root)
-      directories.each {|dir| dir.create! }
-      files.each {|file| file.create! }
+      self.nodes.each {|node| node.create! }
     end
     
     # TODO: clear lists & value for root?

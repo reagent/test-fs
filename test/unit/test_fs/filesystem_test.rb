@@ -18,14 +18,10 @@ module TestFs
         @fs.root.should == '/tmp/name'
       end
       
-      it "should have an empty directory list by default" do
-        @fs.directories.should == []
+      it "should have an empty node list by default" do
+        @fs.nodes.should == []
       end
       
-      it "should have an empty file list by default" do
-        @fs.files.should == []
-      end
-
       it "should be able to add a directory" do
         dir = stub()
       
@@ -33,7 +29,7 @@ module TestFs
         Directory.expects(:new).with('/root', 'dir').returns(dir)
         
         @fs.dir 'dir'
-        @fs.directories.should == [dir]
+        @fs.nodes.should == [dir]
       end
       
       it "should be able to create the root directory" do
@@ -48,7 +44,7 @@ module TestFs
         
         dir = mock {|m| m.expects(:create!).with() }
         
-        @fs.stubs(:directories).with().returns([dir])
+        @fs.stubs(:nodes).with().returns([dir])
         @fs.create!
       end
       
@@ -59,17 +55,16 @@ module TestFs
         File.expects(:new).with('/root', 'file').returns(file)
         
         @fs.file 'file'
-        @fs.files.should == [file]
+        @fs.nodes.should == [file]
       end
       
       it "should be able to create the underlying files" do
         FileUtils.stubs(:mkdir)
         
         file = mock {|m| m.expects(:create!).with() }
-        @fs.stubs(:files).with().returns([file])
+        @fs.stubs(:nodes).with().returns([file])
         
         @fs.create!
-        
       end
       
       it "should be able to destroy the filesystem created" do
