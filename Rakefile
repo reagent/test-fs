@@ -12,10 +12,10 @@ spec = Gem::Specification.new do |s|
   s.has_rdoc         = true
   s.extra_rdoc_files = %w(README.rdoc)
   s.rdoc_options     = %w(--main README.rdoc)
-  s.summary          = "This gem does ... "
-  s.author           = 'First Last'
-  s.email            = 'user@example.com'
-  s.homepage         = 'http://my-site.net'
+  s.summary          = "This gem provides an easy way to generate and destroy filesystems from within Test::Unit tests"
+  s.author           = 'Patrick Reagan'
+  s.email            = 'patrick.reagan@viget.com'
+  s.homepage         = 'http://www.viget.com/extend/'
   s.files            = %w(README.rdoc Rakefile) + Dir.glob("{lib,test}/**/*")
   # s.executables    = ['test-fs']
   
