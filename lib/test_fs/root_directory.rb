@@ -6,8 +6,6 @@ module TestFs # :nodoc:
   #
   class RootDirectory < Directory
 
-    attr_reader :nodes
-    
     def initialize
       @nodes = []
     end
