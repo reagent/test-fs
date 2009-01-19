@@ -10,6 +10,10 @@ require 'test_fs/root_directory'
 require 'test_fs/file'
 require 'test_fs/helper'
 
-class Test::Unit::TestCase
-  include TestFs::Helper
+module Test # :nodoc:
+  module Unit # :nodoc:
+    class TestCase # :nodoc:
+      include TestFs::Helper
+    end
+  end
 end

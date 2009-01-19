@@ -1,5 +1,5 @@
-module TestFs
-  class Node
+module TestFs # :nodoc:
+  class Node # :nodoc:
     
     def initialize(root_path, name)
       @root_path = root_path

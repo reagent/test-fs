@@ -1,4 +1,9 @@
-module TestFs
+module TestFs # :nodoc:
+  
+  # = RootDirectory
+  #
+  # Represents the root of the filesystem
+  #
   class RootDirectory < Directory
 
     attr_reader :nodes
@@ -6,12 +11,16 @@ module TestFs
     def initialize
       @nodes = []
     end
-    
+
+    # Retrieve the path for the generated root directory
+    #
     def path
       "#{Dir.tmpdir}/#{name}"
     end
     
     # TODO: clear lists & value for root?
+    # Recursively destroy the root filesystem
+    #
     def destroy!
       FileUtils.rm_rf(self.path)
     end

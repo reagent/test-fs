@@ -2,17 +2,75 @@
 
 == Description
 
-Test FS is a gem that's used in your testing environment to create a temporary directory and file structure so that you don't have to muck around with mocking out filesystem calls or have a specific directory structure as part of your project.
+Test FS is a gem that's used in your testing environment to create a temporary directory and file structure so that you don't have to muck around with mocking out filesystem calls or have a specific directory structure as part of your project.  It's easy to set up and easy to destroy.
 
 == Installation
 
-    sudo gem install test-fs
+    sudo gem install reagent-test-fs --source=http://gems.github.com
 
 == Usage
 
+TestFS is designed to be used from within your Unit Tests to set up a directory and then tear it down immediately after your test runs:
+
+    require 'rubygems'
+    require 'test/unit'
     require 'test_fs'
     
-TestFS is designed to be used from within your Unit Tests ... 
+    class LameExample
+      
+      def initialize(root)
+        @root = root
+      end
+        
+      def magic?
+        File.exist?("#{@root}/path/file.txt")
+      end
+      
+    end
+    
+    class LameExampleTest < Test::Unit::TestCase
+      
+      def setup 
+        @fs = setup_filesystem do |root|
+          root.dir 'path' do |p|
+            p.file 'file.txt'
+          end
+        end
+      end
+      
+      def teardown
+        @fs.destroy!
+      end
+      
+      def test_magic
+        lame_example = LameExample.new(@fs.path)
+        assert_equal true, lame_example.magic?
+      end
+      
+    end
+    
+That's just a simple example, you can have parallel directories and nest as deep as you need:
+
+    setup_filesystem do |root|
+      root.dir 'app' do |app|
+        app.dir 'controllers'
+        app.dir 'helpers
+        app.dir 'models'
+      end
+      root.dir.dir 'config' do |config|
+        config.file 'database.yml'
+        config.file 'environment.rb'
+        config.dir  'environments' do |environments|
+          environments.file 'test.rb'
+          environments.file 'development.rb'
+      end
+    end
+
+== TODO
+
+* Teardown of filesystem is manual (e.g. @fs.destroy!) - this should be hooked into standard Test::Unit teardown if there is a filesystem that was created as part of the test
+* This doesn't handle the creation of multiple filesytems in a single test run - new filesystems will clobber existing ones
+* The <tt>file</tt> method just uses FileUtils.touch to create a file, it needs a way to easily get content into the file
 
 == License
 
