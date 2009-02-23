@@ -57,7 +57,7 @@ That's just a simple example, you can have parallel directories and nest as deep
         app.dir 'helpers
         app.dir 'models'
       end
-      root.dir.dir 'config' do |config|
+      root.dir 'config' do |config|
         config.file 'database.yml'
         config.file 'environment.rb'
         config.dir  'environments' do |environments|
